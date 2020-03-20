@@ -1,3 +1,7 @@
+# 1.0.1.1
+## Updated link command
+Made it use an embed instead of a message
+
 # 1.0.1.0
 ## Link command
 Added a command that gives the link to Mario Royale, just cause I can.
