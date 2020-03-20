@@ -3,7 +3,7 @@ import endpoints, variables
 
 
 
-version = "1.0.1.0"
+version = "1.0.0.1"
 
 def replaceMultiple(mainString, toBeReplaces, newString=""):
     for elem in toBeReplaces :
@@ -76,7 +76,12 @@ async def status(data):
 
 async def link(data):
     try:
-        await endpoints.message(data['d']['channel_id'], f"Mario Royale Link\nhttps://mroyale.cyuubi.xyz")
+        await endpoints.embed(data['d']['channel_id'], f"<@{data['d']['author']['id']}>", {
+            "title": "MRoyale Link",
+            "color": int('FFA500', 16),
+            "description": "[Click here](https://mroyale.cyuubi.xyz)"
+        })
+        await endpoints.del_message(data['d']['channel_id'], data['d']['id'])
     except Exception as ex:
         handle_exception(ex, inspect.currentframe().f_code.co_name)
 
