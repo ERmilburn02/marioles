@@ -2,7 +2,7 @@ import asyncio, json, aiohttp, time, datetime, random, inspect
 import endpoints, messages, reactions, variables
 keepConnection = True
 variables.mRestart = datetime.datetime.now()
-print("Mario Royale Bot")
+print("Marioles")
 
 async def start(url):
     try:

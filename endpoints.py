@@ -59,6 +59,9 @@ async def fetch_user(guild, user):
 async def get_all_guilds():
     return await api_gate(f"/users/@me/guilds", "GET")
 
+async def get_all_reacs(channel, message, emoji):
+    return await api_gate(f"/channels/{channel}/messages/{message}/reactions/{emoji}", "GET")
+
 async def api_gate(path, method="GET", reason = '', **kwargs):
     if variables.lock is False:
         k = await api_call(path, method, reason, **kwargs)
