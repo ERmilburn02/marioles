@@ -89,74 +89,52 @@ async def link(data):
 async def characterSelect(data):
     try:
         if data['d']['guild_id'] == '672229426272010281':
-            a_message = data['d']['content'].split(' ', 1)
+            reg = re.search(r'\A\,switch .+', data['d']['content'])
             characterList = {
-                'player': {
-                    'id': '689284795595096202',
-                    'name': 'player'
-                },
-                'infringio': {
-                    'id': '689247676315074570',
-                    'name': 'infringio'
-                },
-                'mario': {
-                    'id': '689190614583083137',
-                    'name': 'mario'
-                },
-                'luigi': {
-                    'id': '689190704408559736',
-                    'name': 'luigi'
-                },
-                'peach': {
-                    'id': '689190834633048079',
-                    'name': 'peach'
-                },
-                'toad': {
-                    'id': '689191236522737740',
-                    'name': 'toad'
-                },
-                'yoshi': {
-                    'id': '689191571681312801',
-                    'name': 'yoshi'
-                },
-                'waluigi': {
-                    'id': '689192145378082862',
-                    'name': 'waluigi'
-                },
-                'wario': {
-                    'id': '689191896337219655',
-                    'name': 'wario'
-                }
+                'player': '689284795595096202',
+                'infringio': '689247676315074570',
+                'mario': '689190614583083137',
+                'luigi': '689190704408559736',
+                'peach': '689190834633048079',
+                'toad': '689191236522737740',
+                'yoshi': '689191571681312801',
+                'waluigi': '689192145378082862',
+                'wario': '689191896337219655'
             }
-            if a_message[0] == ",switch" and a_message[1].lower() in characterList:
+            if reg != None:
+                m = data['d']['content'].split(" ", 1)[1:]
+                if m[0].lower() in characterList:
+                    valid = True
+                else:
+                    valid = False
+            else:
+                valid = False
 
-                remRole = ''
-                if characterList['player']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['player']['id']
-                elif characterList['infringio']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['infringio']['id']
-                elif characterList['mario']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['mario']['id']
-                elif characterList['luigi']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['luigi']['id']
-                elif characterList['peach']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['peach']['id']
-                elif characterList['toad']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['toad']['id']
-                elif characterList['yoshi']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['yoshi']['id']
-                elif characterList['waluigi']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['waluigi']['id']
-                elif characterList['wario']['id'] in data['d']['member']['roles']:
-                    remRole = characterList['wario']['id']
+            
+            
+            remRoles = []
+            for elem in data['d']['member']['roles']:
+                for i in characterList.values():
+                    if elem == i:
+                        remRoles.append(elem)
+
+            for elem in remRoles:
+                await endpoints.rem_role("672229426272010281", data['d']['author']['id'], elem)
+
+            if valid == True:
+                role = characterList[m[0].lower()]
+                t = f"<@{data['d']['author']['id']}>, you have switched your character to **{m[0].lower()}**!"
+
+            else:
+                char, role = random.choice(list(characterList.items()))
+                t = f"<@{data['d']['author']['id']}>, you let your fate decide, and became **{char}**!"
+
                 
+            await endpoints.add_role("672229426272010281", data['d']['author']['id'], role)
+            await endpoints.message(data['d']['channel_id'], t)
 
-                await endpoints.rem_role("672229426272010281", data['d']['author']['id'], remRole)
-                await endpoints.add_role("672229426272010281", data['d']['author']['id'], characterList[a_message[1].lower()]['id'])
-                await endpoints.message(data['d']['channel_id'], f"<@{data['d']['author']['id']}>, you have switched your character to **{characterList[a_message[1].lower()]['name']}**!")
     except Exception as ex:
         handle_exception(ex, inspect.currentframe().f_code.co_name)
-
 
 
 

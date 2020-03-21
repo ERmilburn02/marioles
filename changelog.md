@@ -1,3 +1,7 @@
+# 1.0.2.0
+## Switch command updated
+Chrisoman helped improve the switch command, and it now also assigns a random character if you don't select one.
+
 # 1.0.1.1
 ## Updated link command
 Made it use an embed instead of a message
