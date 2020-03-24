@@ -92,7 +92,6 @@ async def characterSelect(data):
             reg = re.search(r'\A\,switch .+', data['d']['content'])
             characterList = {
                 'player': '689284795595096202',
-                'infringio': '689247676315074570',
                 'mario': '689190614583083137',
                 'luigi': '689190704408559736',
                 'peach': '689190834633048079',
@@ -143,7 +142,7 @@ commandList = {
         "switch": {
             "code": characterSelect,
             "help": {
-                "name": ",switch [Player/Infringio/Mario/Luigi/Peach/Toad/Yoshi/Waluigi/Wario]",
+                "name": ",switch [Player/Mario/Luigi/Peach/Toad/Yoshi/Waluigi/Wario]",
                 "value": "Changes your character role"
             }
         },
