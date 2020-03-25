@@ -3,7 +3,7 @@ import endpoints, variables
 
 
 
-version = "1.0.0.1"
+version = "1.0.2.1"
 
 def replaceMultiple(mainString, toBeReplaces, newString=""):
     for elem in toBeReplaces :
@@ -88,17 +88,16 @@ async def link(data):
 
 async def characterSelect(data):
     try:
-        if data['d']['guild_id'] == '672229426272010281':
+        if data['d']['guild_id'] == '682024034418163819':
             reg = re.search(r'\A\,switch .+', data['d']['content'])
             characterList = {
-                'player': '689284795595096202',
-                'mario': '689190614583083137',
-                'luigi': '689190704408559736',
-                'peach': '689190834633048079',
-                'toad': '689191236522737740',
-                'yoshi': '689191571681312801',
-                'waluigi': '689192145378082862',
-                'wario': '689191896337219655'
+                'player': '683364722749472859',
+                'mario': '682111141844877323',
+                'luigi': '682111395697000459',
+                'peach': '682111445068283905',
+                'toad': '682111230525440149',
+                'waluigi': '682121852314845184',
+                'wario': '682409568470695941'
             }
             if reg != None:
                 m = data['d']['content'].split(" ", 1)[1:]
@@ -118,7 +117,7 @@ async def characterSelect(data):
                         remRoles.append(elem)
 
             for elem in remRoles:
-                await endpoints.rem_role("672229426272010281", data['d']['author']['id'], elem)
+                await endpoints.rem_role("682024034418163819", data['d']['author']['id'], elem)
 
             if valid == True:
                 role = characterList[m[0].lower()]
@@ -129,7 +128,7 @@ async def characterSelect(data):
                 t = f"<@{data['d']['author']['id']}>, you let your fate decide, and became **{char}**!"
 
                 
-            await endpoints.add_role("672229426272010281", data['d']['author']['id'], role)
+            await endpoints.add_role("682024034418163819", data['d']['author']['id'], role)
             await endpoints.message(data['d']['channel_id'], t)
 
     except Exception as ex:
